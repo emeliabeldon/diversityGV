@@ -1,12 +1,10 @@
 Package: diversityGV
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Measures diversity using the Generalized Variance formula.
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Emelia Beldon, Co-Authors: Todd Bonheyo, Dr. Gaurav Arora, Dr. Gerardo Chacon
+Maintainer: The package maintainer: Emelia Beldon <emeliabeldon13@gmail.com>
+Description: TBA
+License: TBA
 Encoding: UTF-8
-LazyData: true
 Import: tidyverse
