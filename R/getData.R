@@ -1,4 +1,8 @@
 getData <- function(x) {
-  dataTable <- readr::read_csv(x)
+  dataTable <<- read_csv(x, col_types =cols() )
+
+  print("Your new table is now called: dataTable")
+
   View(dataTable)
 }
+
