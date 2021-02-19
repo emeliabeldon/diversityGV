@@ -15,7 +15,7 @@ polishData <- function(x) {
   dataTable1 <<- mutate(dataTable1, Total_Number_of_Students = rowSums(dataTable1[,4:10]))
 
   nameTable <- dataTable1[(dataTable1$Total_Number_of_Students==0),] ['Institution Name']
-  institutionName <- toString(nameTable$`Institution Name`[1])
+  institutionName <- toString(nameTable$`Institution Name`)
   print("These institution(s):")
   print(institutionName)
   print("will be removed from the data set due insufficent data.")
