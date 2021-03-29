@@ -7,4 +7,4 @@ Maintainer: The package maintainer: Emelia Beldon <emeliabeldon13@gmail.com>
 Description: TBA
 License: TBA
 Encoding: UTF-8
-Depends: dplyr, readr
+Depends: dplyr, readr, ggplot2, pastecs

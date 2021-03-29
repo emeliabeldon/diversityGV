@@ -1,31 +1,44 @@
+#Set function with one argument, x, to receive table name
 polishData <- function(x) {
 
-  dataTable1 <<- select(x, -contains("men"), -UnitID, -contains("unknown"), -contains("alien"))
+  #Remove columns for gender, UnitID, Unknown Races, and Alien Races
+  dataTable <<- select(x, -contains("men"), -contains("UnitID"), -contains("unknown"), -contains("alien"))
 
-  dataTable1 <<- rename(dataTable1, 'Total_Number_of_Students' = 'Grand total (EF2018A  All students total)', 'American_Indian_Or_Alaska_Native_Total' = 'American Indian or Alaska Native total (EF2018A  All students total)',
-                        'Asian_Total' = 'Asian total (EF2018A  All students total)', 'Black_Or_African_American_Total' = 'Black or African American total (EF2018A  All students total)',
-                        'Hispanic_Total' = 'Hispanic total (EF2018A  All students total)', 'Native_Hawaiian_Or_Other_Pacific_Islander'
-                        = 'Native Hawaiian or Other Pacific Islander total (EF2018A  All students total)', 'White_Total' = 'White total (EF2018A  All students total)',
-                        'Two_Or_More_Races_Total' = 'Two or more races total (EF2018A  All students total)')
+  #Rename columns for clarity and next function
+  colnames(dataTable) <<- c('Institution_Name','Total_Number_Of_Students', 'American_Indian_Or_Alaska_Native_Total', 'Asian_Total',
+                            'Black_Or_African_American_Total','Hispanic_Total', 'Native_Hawaiian_Or_Other_Pacific_Islander', 'White_Total',
+                            'Two_Or_More_Races_Total')
 
-  dataTable1 <<- mutate(dataTable1, "ID" = row_number())
+  #Update the column with the total number of students to add the number of students per race in the table
+  #since gender, UnitID, Unknown Races, and Alien Races were removed
+  dataTable <<- mutate(dataTable, Total_Number_of_Students = rowSums(dataTable[,4:10]))
 
-  dataTable1 <<-  dataTable1[,c(10,1,2,3,4,5,6,7,8,9)]
+  #Removes rows with total number of students = 0 to prevent miscalculations
+  dataTable <<- dataTable[!(dataTable$Total_Number_of_Students == 0), ]
 
-  dataTable1 <<- mutate(dataTable1, Total_Number_of_Students = rowSums(dataTable1[,4:10]))
+  #Add new column for ID starting at 1 to x number of institutions
+  dataTable <<- mutate(dataTable, "ID" = row_number())
 
-  nameTable <- dataTable1[(dataTable1$Total_Number_of_Students==0),] ['Institution Name']
-  institutionName <- toString(nameTable$`Institution Name`)
+  #Rearrange columns to have ID column at the beginning of the table
+  dataTable <<-  dataTable[,c(10,1,2,3,4,5,6,7,8,9)]
+
+  #Set a new table for the institutions that will be removed to add to a string for print
+  nameTable <- dataTable[(dataTable$Total_Number_of_Students==0),] ['Institution_Name']
+
+  #Add the institution names to a string to print and communicate to the user of elimination
+  institutionName <- toString(nameTable$`Institution_Name`)
+
+  #Print the institutions that will be removed from the table
   print("These institution(s):")
   print(institutionName)
-  print("will be removed from the data set due insufficent data.")
+  print("will be removed from the data set due to insufficent data.")
 
-  #removes rows with total number = 0
-  dataTable1 <<- dataTable1[!(dataTable1$Total_Number_of_Students == 0), ]
+  #Print new data table name and next instructions
+  print("Your new data table is now called: dataTable")
+  print("Use measureData() function with dataTable to measure the GV value of each institution.")
 
-  print("Your new table is now called: dataTable1")
-
-  View(dataTable1)
+  #Open and view table
+  View(dataTable)
 }
 
 
